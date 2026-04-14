@@ -12,13 +12,11 @@ def ask_question(query):
             "text": f"""
 You are answering from an HR policy document.
 
-Use ONLY the information from the retrieved document.
-Do NOT use outside knowledge.
-Do NOT add extra sections.
-Do NOT assume or generate missing information.
-
-If the answer is not found in the document, say:
-"Answer not found in document."
+Instructions:
+- If section number is mentioned, find exact section
+- Carefully search retrieved context
+- Return exact section content
+- Do not guess
 
 Question: {query}
 """
@@ -30,7 +28,8 @@ Question: {query}
                 "modelArn": MODEL_ARN,
                 "retrievalConfiguration": {
                     "vectorSearchConfiguration": {
-                        "numberOfResults": 15
+                        "numberOfResults": 20,
+                        "overrideSearchType": "SEMANTIC"
                     }
                 },
                 "generationConfiguration": {
